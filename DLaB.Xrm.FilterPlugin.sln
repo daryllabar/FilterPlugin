@@ -1,0 +1,62 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLaB.Xrm.Filter.Plugins", "DLaB.Xrm.Filter.Plugins\DLaB.Xrm.Filter.Plugins.csproj", "{709BB4CB-51C1-46A0-966E-B0E0B5FA640F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLaB.Xrm.Filter.Plugins.Tests", "DLaB.Xrm.Filter.Plugins.Tests\DLaB.Xrm.Filter.Plugins.Tests.csproj", "{991D7D7F-46DC-4C4C-9ED1-817C9BE53AA1}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DLaB.Xrm.FilterPlugin", "DLaB.Xrm.FilterPlugin\DLaB.Xrm.FilterPlugin.shproj", "{97C5E892-28C8-4179-8AD9-80CD6E06A20B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLaB.Xrm.FilterPlugin.Test", "DLaB.Xrm.FilterPlugin.Test\DLaB.Xrm.FilterPlugin.Test.csproj", "{3540EF8D-4F98-4AB1-B5C5-39E95373A66D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DLaB.Xrm.FilterPlugin.TestCore", "DLaB.Xrm.FilterPlugin.TestCore\DLaB.Xrm.FilterPlugin.TestCore.shproj", "{C850DE91-0001-4601-9499-8F783B42F5F3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DLaB.Xrm.FilterPlugin.WorkflowCore", "DLaB.Xrm.FilterPlugin.WorkflowCore\DLaB.Xrm.FilterPlugin.WorkflowCore.shproj", "{F4581282-FB9E-4523-BC18-2A9513523486}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Code Generation", "Code Generation", "{A82641FB-E190-4368-82A1-0DA35BF923D9}"
+	ProjectSection(SolutionItems) = preProject
+		CodeGeneration\crmassumption.snippet = CodeGeneration\crmassumption.snippet
+		CodeGeneration\crmentitybuilder.snippet = CodeGeneration\crmentitybuilder.snippet
+		CodeGeneration\crmmstestclass.snippet = CodeGeneration\crmmstestclass.snippet
+		CodeGeneration\crmplugin.snippet = CodeGeneration\crmplugin.snippet
+		CodeGeneration\crmplugintest.snippet = CodeGeneration\crmplugintest.snippet
+		CodeGeneration\crmtestmethodclass.snippet = CodeGeneration\crmtestmethodclass.snippet
+		DLaB.Xrm.FilterPlugin\Entities\EBG.DLaB.Xrm.FilterPlugin.Settings.xml = DLaB.Xrm.FilterPlugin\Entities\EBG.DLaB.Xrm.FilterPlugin.Settings.xml
+		CodeGeneration\LINQPadGuidGenerator.txt = CodeGeneration\LINQPadGuidGenerator.txt
+		CodeGeneration\region.snippet = CodeGeneration\region.snippet
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DLaB.Xrm.FilterPlugin\DLaB.Xrm.FilterPlugin.projitems*{709bb4cb-51c1-46a0-966e-b0e0b5fa640f}*SharedItemsImports = 4
+		DLaB.Xrm.FilterPlugin\DLaB.Xrm.FilterPlugin.projitems*{97c5e892-28c8-4179-8ad9-80cd6e06a20b}*SharedItemsImports = 13
+		DLaB.Xrm.FilterPlugin.TestCore\DLaB.Xrm.FilterPlugin.TestCore.projitems*{991d7d7f-46dc-4c4c-9ed1-817c9be53aa1}*SharedItemsImports = 4
+		DLaB.Xrm.FilterPlugin.TestCore\DLaB.Xrm.FilterPlugin.TestCore.projitems*{c850de91-0001-4601-9499-8f783b42f5f3}*SharedItemsImports = 13
+		DLaB.Xrm.FilterPlugin.WorkflowCore\DLaB.Xrm.FilterPlugin.WorkflowCore.projitems*{f4581282-fb9e-4523-bc18-2a9513523486}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{709BB4CB-51C1-46A0-966E-B0E0B5FA640F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{709BB4CB-51C1-46A0-966E-B0E0B5FA640F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{709BB4CB-51C1-46A0-966E-B0E0B5FA640F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{709BB4CB-51C1-46A0-966E-B0E0B5FA640F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991D7D7F-46DC-4C4C-9ED1-817C9BE53AA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991D7D7F-46DC-4C4C-9ED1-817C9BE53AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991D7D7F-46DC-4C4C-9ED1-817C9BE53AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991D7D7F-46DC-4C4C-9ED1-817C9BE53AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3540EF8D-4F98-4AB1-B5C5-39E95373A66D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3540EF8D-4F98-4AB1-B5C5-39E95373A66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3540EF8D-4F98-4AB1-B5C5-39E95373A66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3540EF8D-4F98-4AB1-B5C5-39E95373A66D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5251135A-BC65-4963-B5B0-D08D19A3E849}
+	EndGlobalSection
+EndGlobal
