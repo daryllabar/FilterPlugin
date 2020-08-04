@@ -38,4 +38,4 @@ jobs:
         ALLOW_TAG_PREFIX: "true"
       with:
         args: |
-            build\\DLaB.Xrm.Filter.Plugins\bin\Debug\DLaB.Xrm.Filter.Plugins.dll
+            DLaB.Xrm.Filter.Plugins\bin\Debug\DLaB.Xrm.Filter.Plugins.dll
