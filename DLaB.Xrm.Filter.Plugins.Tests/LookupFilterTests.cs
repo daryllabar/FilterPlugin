@@ -18,7 +18,6 @@ namespace DLaB.Xrm.Filter.Plugins.Tests
         [TestMethod]
         public void FormatLookup_InvalidConfig_Should_SkipExecution()
         {
-
             //
             // Arrange
             //

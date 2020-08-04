@@ -121,7 +121,7 @@ namespace DLaB.Xrm.Filter.Plugins
             var results = context.GetOutputParameterValue<EntityCollection>("BusinessEntityCollection");
             var formatter = new AttributeFormatter();
             var addedAttributesString = context.GetFirstSharedVariable<string>(Variables.AttributesAdded);
-            var addedAttributes = addedAttributesString.Split(',').Select(a => a.Trim());
+            var addedAttributes = addedAttributesString.Split(',').Select(a => a.Trim()).ToArray();
             context.Trace($"Applying format for {results.Entities.Count} entities.");
             foreach (var entity in results.Entities)
             {
