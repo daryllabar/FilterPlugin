@@ -27,6 +27,7 @@ For a full walk through video of what it is, and how to install it, see the [vid
 |attributes[].prefix| (Optional) A prefix to include if the attribute has a value (i.e. contains at least one character that is not white space)|
 |format| The format of the display name.  This format uses [composite based formatting options allowed by the .net string.Format method](https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting). |
 |nameAttribute|The name of the display name of the entity|
+
 \* Please note: All names must be the logical (lower case) name of the attributes
 
 ## Example Config
