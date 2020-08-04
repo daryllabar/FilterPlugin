@@ -3,8 +3,10 @@
 Plugin to allow for formatting name of filter lookup result.  
 So rather than this where the names are exact and you can't differentiate:
 ![Unformatted](https://raw.githubusercontent.com/daryllabar/FilterPlugin/master/.github/images/UnformattedLookup.png)
+
 you can add additional columns to be able to distinguish the difference between records:
 ![Formatted](https://raw.githubusercontent.com/daryllabar/FilterPlugin/master/.github/images/FormattedLookup.png)
+
 For a full walk through video of what it is, and how to install it, see the [video](https://youtu.be/BkOLeoMkW_8)!
 
 # Install
