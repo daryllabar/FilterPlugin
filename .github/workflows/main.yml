@@ -1,6 +1,9 @@
 name: Build Xrm Plugin
  
-on: [push]
+on:
+  create:
+    tags:
+      - '*'
  
 jobs:
   build:
