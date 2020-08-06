@@ -13,10 +13,13 @@ For a full walk through video of what it is, and how to install it, see the [vid
   - Download the plugin assembly (DLaB.Xrm.Filter.Plugins.dll) from the latest release on the [releases](/releases) page.
   - Register the plugin to your org using the plugin registration tool
   - Register two "RetrieveMultiple" plugin steps, Pre-Operation and Post-Operation for the entity(-ies) that you want to update the name format of.
-    - Paste JSON config in the Unsecure Configuration for both steps.
+    - Paste JSON config in the Unsecure Configuration for both steps (or alternatively, leave it blank which will fall back to using the Lookup View for the entity).
   - That's it.  Go and test the formatting!
 
 # Plugin Config
+## Lookup View Columns
+\* Note - The recommended approach is to define JSON that is specificed in the pugin step registrations \* If no values are entered for both the Secure and Unsecure configuration of the plugin registration, the plugin will default to using the first 3 columns defined in the LookupView for the entity.
+
 ## Config Options
 
 |Name|Type|
