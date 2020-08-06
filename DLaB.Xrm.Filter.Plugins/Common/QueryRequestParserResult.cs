@@ -44,32 +44,27 @@ namespace DLaB.Xrm.Filter.Plugins.Common
             Success,
         }
 
-        public IEnumerable<string> Attributes => XmlDoc.SelectNodes(QueryRequestParser.FetchXmlDef.AttributePath)?
-                                                       .Cast<XmlNode>()
-                                                       .SelectMany(n => n.Attributes?
-                                                                         .Cast<XmlAttribute>()
-                                                                         .Where(a => a.Name == "name")
-                                                                         .Select(a => a.Value));
+        public IEnumerable<string> Attributes => XmlDoc.AttributeNames;
 
-        public XmlNode Entity => XmlDoc?.SelectSingleNode(QueryRequestParser.FetchXmlDef.EntityPath);
+        public XmlNode Entity => XmlDoc?.EntityNode;
 
         public Exception Exception { get; set; }
 
-        public string FetchXml => XmlDoc?.OuterXml;
+        public string FetchXml => XmlDoc?.Doc?.OuterXml;
 
         public FetchExpression Fetch { get; set; }
 
         public LookupFilterResult Result { get; set; }
 
-        public XmlDocument XmlDoc { get; set; }
+        public FetchXmlDocument XmlDoc { get; set; }
 
-        public QueryRequestParserResult(LookupFilterResult result, XmlDocument doc)
+        public QueryRequestParserResult(LookupFilterResult result, FetchXmlDocument doc)
         {
             Result = result;
             XmlDoc = doc;
         }
 
-        public QueryRequestParserResult(Exception exception, XmlDocument doc = null) : this(LookupFilterResult.Exception, doc)
+        public QueryRequestParserResult(Exception exception, FetchXmlDocument doc = null) : this(LookupFilterResult.Exception, doc)
         {
             Exception = exception;
         }

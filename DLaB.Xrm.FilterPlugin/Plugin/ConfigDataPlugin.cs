@@ -8,7 +8,8 @@ namespace DLaB.Xrm.FilterPlugin.Plugin
     {
         public TConfig SecureConfigData { get; set; }
         public TConfig UnsecureConfigData { get; set; }
-        public TConfig ConfigData => SecureConfigData ?? UnsecureConfigData ?? new TConfig();
+        public TConfig ConfigData => SecureConfigData ?? UnsecureConfigData ?? Default ?? (Default = CreateDefaultConfigData());
+        private TConfig Default { get; set; }
 
         public Exception ConfigParseError { get; set; }
 
@@ -39,6 +40,11 @@ namespace DLaB.Xrm.FilterPlugin.Plugin
             }
 
             return default;
+        }
+
+        public virtual TConfig CreateDefaultConfigData()
+        {
+            return new TConfig();
         }
 
         protected override bool SkipExecution(ExtendedPluginContext context)

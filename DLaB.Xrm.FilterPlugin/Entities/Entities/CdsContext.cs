@@ -102,6 +102,18 @@ namespace DLaB.Xrm.FilterPlugin.Entities
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="DLaB.Xrm.FilterPlugin.Entities.SavedQuery"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<DLaB.Xrm.FilterPlugin.Entities.SavedQuery> SavedQuerySet
+		{
+			[System.Diagnostics.DebuggerNonUserCode()]
+			get
+			{
+				return this.CreateQuery<DLaB.Xrm.FilterPlugin.Entities.SavedQuery>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="DLaB.Xrm.FilterPlugin.Entities.Site"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<DLaB.Xrm.FilterPlugin.Entities.Site> SiteSet

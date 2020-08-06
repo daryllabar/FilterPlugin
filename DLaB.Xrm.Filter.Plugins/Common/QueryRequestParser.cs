@@ -3,27 +3,16 @@ using System.Linq;
 using System.Xml;
 using Microsoft.Xrm.Sdk.Query;
 using LookupFilterResult = DLaB.Xrm.Filter.Plugins.Common.QueryRequestParserResult.LookupFilterResult;
+using FetchXmlDef = DLaB.Xrm.Filter.Plugins.Common.FetchXmlDocument.Definition;
 
 namespace DLaB.Xrm.Filter.Plugins.Common
 {
     public class QueryRequestParser
     {
-        public struct FetchXmlDef
-        {
-            public static readonly string Attribute = "attribute";
-            public static readonly string AttributePath = "fetch/entity/attribute";
-            public static readonly string ConditionOperatorAttribute = "operator";
-            public static readonly string Entity = "entity";
-            public static readonly string EntityPath = "fetch/entity";
-            public static readonly string EntityFilterConditionPath = "filter/condition";
-            public static readonly string LikeOperator = "like";
-            public static readonly string Order = "order";
-        }
-
         public QueryRequestParserResult Parse(QueryBase qb, string primaryNameAttributeName)
         {
             
-            var doc = new XmlDocument();
+            var doc = new FetchXmlDocument();
             var result =
                 GetFetchQuery(qb, out var query)
                 ?? ParseXml(query, doc)
@@ -33,73 +22,58 @@ namespace DLaB.Xrm.Filter.Plugins.Common
             return result;
         }
 
-        private QueryRequestParserResult ValidateIsLookupFilter(XmlDocument doc, string primaryNameAttributeName)
+        private QueryRequestParserResult ValidateIsLookupFilter(FetchXmlDocument doc, string primaryNameAttributeName)
         {
-            return InvalidFetchXml(doc, out var entity)
-                   ?? MissingAttributes(doc, entity, out var attributes)
-                   ?? MissingPrimaryNameAttribute(doc, attributes, primaryNameAttributeName)
-                   ?? MissingOrderBy(doc, entity)
-                   ?? MissingFilterConditions(doc, out var filterConditions)
-                   ?? MissingLikeCondition(doc, filterConditions)
+            return InvalidFetchXml(doc)
+                   ?? MissingAttributes(doc)
+                   ?? MissingPrimaryNameAttribute(doc, primaryNameAttributeName)
+                   ?? MissingOrderBy(doc)
+                   ?? MissingFilterConditions(doc)
+                   ?? MissingLikeCondition(doc)
                    ?? new QueryRequestParserResult(LookupFilterResult.Success, doc);
         }
 
 
-        private static QueryRequestParserResult InvalidFetchXml(XmlDocument doc, out XmlNode entity)
+        private static QueryRequestParserResult InvalidFetchXml(FetchXmlDocument doc)
         {
-            entity = doc.FirstChild?.FirstChild;
-            return entity == null || entity.Name != FetchXmlDef.Entity
+            return doc.EntityNode == null || doc.EntityNode.Name != FetchXmlDef.Entity
                 ? new QueryRequestParserResult(LookupFilterResult.MissingFetchXmlStructure, doc)
                 : null;
         }
 
-        private static QueryRequestParserResult MissingAttributes(XmlDocument doc, XmlNode entity, out XmlNodeList attributes)
+        private static QueryRequestParserResult MissingAttributes(FetchXmlDocument doc)
         {
-            attributes = entity.SelectNodes(FetchXmlDef.Attribute);
-            return attributes?.Count == 0
+            return doc.Attributes.Count == 0
                 ? new QueryRequestParserResult(LookupFilterResult.MissingAttributes, doc)
                 : null;
         }
 
-        private static QueryRequestParserResult MissingPrimaryNameAttribute(XmlDocument doc, XmlNodeList attributes, string primaryNameAttribute)
+        private static QueryRequestParserResult MissingPrimaryNameAttribute(FetchXmlDocument doc, string primaryNameAttribute)
         {
-            return attributes.Cast<XmlNode>()
-                             .SelectMany(a => a.Attributes?.Cast<XmlAttribute>())
-                             .Any(a => a.Name == "name" 
-                                       && a.Value == primaryNameAttribute)
+            return doc.AttributeNames.Contains(primaryNameAttribute)
                 ? null
                 : new QueryRequestParserResult(LookupFilterResult.MissingPrimaryNameAttribute, doc);
         }
 
-        private static QueryRequestParserResult MissingOrderBy(XmlDocument doc, XmlNode entity)
+        private static QueryRequestParserResult MissingOrderBy(FetchXmlDocument doc)
         {
-            return entity.SelectNodes(FetchXmlDef.Order)?.Count != 1
+            return doc.OrderBys.Count == 0
                 ? new QueryRequestParserResult(LookupFilterResult.MissingOrderBy, doc)
                 : null;
         }
 
-        private static QueryRequestParserResult MissingFilterConditions(XmlDocument doc, out XmlNodeList filterConditions)
+        private static QueryRequestParserResult MissingFilterConditions(FetchXmlDocument doc)
         {
-            filterConditions = doc.FirstChild.FirstChild.SelectNodes(FetchXmlDef.EntityFilterConditionPath);
-            return filterConditions == null || filterConditions.Count == 0
+            return doc.FilterConditions.Count == 0
                 ? new QueryRequestParserResult(LookupFilterResult.MissingLikeFilterCondition, doc)
                 : null;
         }
 
-        private QueryRequestParserResult MissingLikeCondition(XmlDocument doc, XmlNodeList filterConditions)
+        private QueryRequestParserResult MissingLikeCondition(FetchXmlDocument doc)
         {
-            var likeCondition = GetLikeCondition(filterConditions);
-            return likeCondition == null 
+            return doc.LikeCondition == null 
                 ? new QueryRequestParserResult(LookupFilterResult.MissingLikeFilterCondition, doc)
                 : null;
-        }
-
-        private XmlNode GetLikeCondition(XmlNodeList filterConditions)
-        {
-            return filterConditions.Cast<XmlNode>()
-                                   .SelectMany(c => c.Attributes?.Cast<XmlAttribute>())
-                                   .FirstOrDefault(a => a.Name == FetchXmlDef.ConditionOperatorAttribute
-                                                        && a.Value == FetchXmlDef.LikeOperator);
         }
 
         private static QueryRequestParserResult GetFetchQuery(QueryBase qb, out FetchExpression fetchExpression)
@@ -114,7 +88,7 @@ namespace DLaB.Xrm.Filter.Plugins.Common
             return new QueryRequestParserResult(LookupFilterResult.NotFetchExpression, null);
         }
 
-        private static QueryRequestParserResult ParseXml(FetchExpression query, XmlDocument doc)
+        private static QueryRequestParserResult ParseXml(FetchExpression query, FetchXmlDocument doc)
         {
             try
             {

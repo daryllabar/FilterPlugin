@@ -9,6 +9,7 @@
     <Import_RootNamespace>DLaB.Xrm.FilterPlugin.Test</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Assumptions\SavedQuery_ContactLookup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Assumptions\Product_Install.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\AccountBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Builders\CrmEnvironmentBuilder.cs" />

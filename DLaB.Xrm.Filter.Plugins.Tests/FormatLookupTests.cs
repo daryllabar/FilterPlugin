@@ -3,6 +3,7 @@ using System.Linq;
 using DLaB.Xrm.Filter.Plugins.Poco;
 using DLaB.Xrm.FilterPlugin.Entities;
 using DLaB.Xrm.FilterPlugin.Test;
+using DLaB.Xrm.FilterPlugin.Test.Assumptions;
 using DLaB.Xrm.FilterPlugin.Test.Builders;
 using DLaB.Xrm.Plugin;
 using DLaB.Xrm.Test;
@@ -21,9 +22,12 @@ namespace DLaB.Xrm.Filter.Plugins.Tests
             //
             // Arrange
             //
+            TestInitializer.InitializeTestSettings();
             var plugin = new FormatLookup(@"Invalid Config");
-            var context = new PluginExecutionContextBuilder().WithFirstRegisteredEvent(plugin).Build();
-            var serviceProvider = new ServiceProviderBuilder(null, context, new FakeTraceService(new DebugLogger())).Build();
+            var context = new PluginExecutionContextBuilder()
+                          .WithFirstRegisteredEvent(plugin)
+                          .WithPrimaryEntityName(Contact.EntityLogicalName).Build();
+            var serviceProvider = new ServiceProviderBuilder(TestBase.GetOrganizationService(), context, new FakeTraceService(new DebugLogger())).Build();
 
             //
             // Act
@@ -96,7 +100,7 @@ namespace DLaB.Xrm.Filter.Plugins.Tests
                 UnsecureConfigData = GetContactSettings()
             };
             var fetchExpression = GetFetchExpression();
-            var context = new PluginExecutionContextBuilder().WithFirstRegisteredEvent(plugin, e => e.Stage == PipelineStage.PreOperation)
+            var context = new PluginExecutionContextBuilder().WithFirstPreOpEvent(plugin)
                                                              .WithInputParameter("Query", fetchExpression).Build();
             var serviceProvider = new ServiceProviderBuilder(null, context, new DebugLogger()).Build();
         
@@ -125,7 +129,7 @@ namespace DLaB.Xrm.Filter.Plugins.Tests
             {
                 UnsecureConfigData = GetContactSettings()
             };
-            var context = new PluginExecutionContextBuilder().WithFirstRegisteredEvent(plugin, e => e.Stage == PipelineStage.PostOperation).Build();
+            var context = new PluginExecutionContextBuilder().WithFirstPostOpEvent(plugin).Build();
             var serviceProvider = new ServiceProviderBuilder(null, context, new DebugLogger()).Build();
 
             //
@@ -159,7 +163,7 @@ namespace DLaB.Xrm.Filter.Plugins.Tests
             var entities = new EntityCollection(new List<Entity> {contact});
             contact.FormattedValues.Add(Contact.Fields.AccountId, "Acme");
             var context = new PluginExecutionContextBuilder()
-                          .WithFirstRegisteredEvent(plugin, e => e.Stage == PipelineStage.PostOperation)
+                          .WithFirstPostOpEvent(plugin)
                           .WithOutputParameter("BusinessEntityCollection", entities)
                           .WithSharedVariables(
                               FormatLookup.Variables.IsLookupFilterRequest, true.ToString(),
@@ -179,7 +183,55 @@ namespace DLaB.Xrm.Filter.Plugins.Tests
             Assert.IsFalse(result.Attributes.ContainsKey(Contact.Fields.AccountId), "Added account id should have been removed.");
             Assert.IsFalse(result.Attributes.ContainsKey(Contact.Fields.Address1_StateOrProvince), "Added state should have been removed.");
         }
-        
+
+        #region MissingConfigPreOp_Should_PopulateConfigFromLookup
+
+        [TestMethod]
+        public void FormatLookup_MissingConfigPreOp_Should_PopulateConfigFromLookup()
+        {
+            new MissingConfigPreOp_Should_PopulateConfigFromLookup().Test();
+        }
+
+        [SavedQuery_ContactLookup]
+        // ReSharper disable once InconsistentNaming
+        private class MissingConfigPreOp_Should_PopulateConfigFromLookup : TestMethodClassBase
+        {
+            protected override void Test(IOrganizationService service)
+            {
+                //
+                // Arrange
+                //
+                var plugin = new FormatLookup();
+                var context = new PluginExecutionContextBuilder()
+                              .WithFirstPreOpEvent(plugin)
+                              .WithPrimaryEntityName(Contact.EntityLogicalName).Build();
+                var serviceProvider = new ServiceProviderBuilder(service, context, Logger).Build();
+
+                //
+                // Act
+                //
+                plugin.Execute(serviceProvider);
+
+                //
+                // Assert
+                //
+                Assert.AreEqual(plugin.ConfigData.NameAttribute, Contact.Fields.FullName);
+                Assert.AreEqual("{0}{1}{2}", plugin.ConfigData.Format);
+                var attributes = plugin.ConfigData.Attributes.ToArray();
+                var att = attributes[0];
+                Assert.AreEqual(att.Attribute, Contact.Fields.FullName, "The fullname attribute should have been found in the lookup query fetch xml, and added to the config Attributes.");
+                Assert.IsTrue(string.IsNullOrWhiteSpace(att.Prefix));
+                att = attributes[1];
+                Assert.AreEqual(att.Attribute, Contact.Fields.EMailAddress1, "The email address attribute should have been found in the lookup query fetch xml, and added to the config Attributes.");
+                Assert.AreEqual(att.Prefix, " - ");
+                att = attributes[2];
+                Assert.AreEqual(att.Attribute, Contact.Fields.Telephone1, "The telephone attribute should have been found in the lookup query fetch xml, and added to the config Attributes.");
+                Assert.AreEqual(att.Prefix, " - ");
+            }
+        }
+
+        #endregion MissingConfigPreOp_Should_PopulateConfigFromLookup
+
         private static string ContactAttributesAdded => $"{Contact.Fields.AccountId}, {Contact.Fields.Address1_StateOrProvince}";
 
         private static FetchExpression GetFetchExpression()

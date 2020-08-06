@@ -159,6 +159,7 @@
     <Compile Include="App_Packages\DLaB.Xrm.Source.3.1.0.0\Serialization\SerializableRelatedEntityCollection.cs" />
     <Compile Include="App_Packages\DLaB.Xrm.Source.3.1.0.0\TypedQueryExpression.cs" />
     <Compile Include="Common\AttributeFormatter.cs" />
+    <Compile Include="Common\FetchXmlDocument.cs" />
     <Compile Include="Common\QueryRequestParser.cs" />
     <Compile Include="Common\QueryRequestParserResult.cs" />
     <Compile Include="FormatLookup.cs" />

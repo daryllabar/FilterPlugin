@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Entities\Contact.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Entities\Lead.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Entities\Product.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Entities\SavedQuery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Entities\Site.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\Entities\SystemUser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Account_AccountCategoryCode.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Competitor_Address1_ShippingMethodCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Competitor_Address2_AddressTypeCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Competitor_Address2_ShippingMethodCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\ComponentState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Contact_AccountRoleCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Contact_Address1_AddressTypeCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Contact_Address1_FreightTermsCode.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Product_StatusCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\PurchaseProcess.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\PurchaseTimeFrame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\SavedQuery_StatusCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Site_Address1_AddressTypeCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Site_Address1_ShippingMethodCode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\OptionSets\Site_Address2_AddressTypeCode.cs" />

@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using DLaB.Xrm.Filter.Plugins.Common;
 using DLaB.Xrm.Filter.Plugins.Poco;
+using DLaB.Xrm.FilterPlugin.Entities;
 using DLaB.Xrm.FilterPlugin.Plugin;
+using Microsoft.Crm.Sdk;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
+using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Sdk.Query;
 using Source.DLaB.Common;
 using Source.DLaB.Xrm;
 using Source.DLaB.Xrm.Plugin;
@@ -34,6 +38,34 @@ namespace DLaB.Xrm.Filter.Plugins
                    .WithExecuteAction(OnPreExecute)
                    .And(PipelineStage.PostOperation, MessageType.RetrieveMultiple)
                    .WithExecuteAction(OnPostExecute).Build();
+        }
+
+        protected override void Initialize(IServiceProvider serviceProvider)
+        {
+            base.Initialize(serviceProvider);
+            if (string.IsNullOrWhiteSpace(SecureConfig)
+                && string.IsNullOrWhiteSpace(UnsecureConfig)
+                && SecureConfigData == null
+                && UnsecureConfigData == null)
+            {
+                InitializeDefaultConfigData(serviceProvider);
+            }
+        }
+
+        private void InitializeDefaultConfigData(IServiceProvider serviceProvider)
+        {
+            var service = serviceProvider.CreateOrganizationService();
+            var context = serviceProvider.GetService<IPluginExecutionContext>();
+            var entityLogicalName = context.PrimaryEntityName;
+            ConfigData.InitializeFromLookupView(service, entityLogicalName);
+        }
+
+        public override AttributeFormatConfig CreateDefaultConfigData()
+        {
+            return new AttributeFormatConfig
+            {
+                Attributes = new List<AttributeFormat>()
+            };
         }
 
         protected override void ExecuteInternal(ExtendedPluginContext context) { throw new NotImplementedException("Invalid registration Event!"); }
@@ -66,14 +98,7 @@ namespace DLaB.Xrm.Filter.Plugins
                     return;
             }
 
-
-
             // <fetch version="1.0" mapping="logical" no-lock="false"><entity name="contact"><attribute name="fullname"/><attribute name="contactid"/><order attribute="fullname" descending="false" /><filter type="or"><condition attribute="fullname" operator="like" value="%Tom%" /></filter></entity></fetch>
-            // 
-
-
-
-
         }
 
         private void ProcessLookupFilterOnPreOp(ExtendedPluginContext context, QueryRequestParserResult result)
@@ -92,7 +117,7 @@ namespace DLaB.Xrm.Filter.Plugins
                                           .Select(a => a.Attribute)
                                           .Where(a => !includedAttributes.Contains(a)))
             {
-                AddAttributeToFetch(result, att);
+                result.XmlDoc.AddAttributeToFetch(att);
                 attributesAdded.Add(att);
             }
 
@@ -101,13 +126,6 @@ namespace DLaB.Xrm.Filter.Plugins
                 : $"Attribute {string.Join(", ", attributesAdded)} have been added to the query.");
             context.SharedVariables.Add(Variables.AttributesAdded, attributesAdded.ToCsv());
             result.Fetch.Query = result.FetchXml;
-        }
-
-        private static void AddAttributeToFetch(QueryRequestParserResult result, string att)
-        {
-            var newAttribute = result.XmlDoc.CreateElement(QueryRequestParser.FetchXmlDef.Attribute);
-            newAttribute.SetAttribute("name", att);
-            result.Entity.AppendChild(newAttribute);
         }
 
         private void OnPostExecute(ExtendedPluginContext context)

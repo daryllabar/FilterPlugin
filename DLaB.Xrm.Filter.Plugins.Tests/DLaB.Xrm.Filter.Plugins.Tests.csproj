@@ -107,14 +107,14 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
-    <Reference Include="XrmUnitTest.09, Version=2.3.0.4, Culture=neutral, PublicKeyToken=9172705c53320911, processorArchitecture=MSIL">
-      <HintPath>..\packages\XrmUnitTest.09.2.3.0.4\lib\net462\XrmUnitTest.09.dll</HintPath>
+    <Reference Include="XrmUnitTest.09, Version=2.3.0.5, Culture=neutral, PublicKeyToken=9172705c53320911, processorArchitecture=MSIL">
+      <HintPath>..\packages\XrmUnitTest.09.2.3.0.5\lib\net462\XrmUnitTest.09.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\AttributeFormatterTests.cs" />
     <Compile Include="Common\QueryParserTests.cs" />
-    <Compile Include="LookupFilterTests.cs" />
+    <Compile Include="FormatLookupTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

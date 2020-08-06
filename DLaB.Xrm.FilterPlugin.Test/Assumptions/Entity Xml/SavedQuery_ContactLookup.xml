@@ -1,0 +1,44 @@
+<Entity xmlns:i="http://www.w3.org/2001/XMLSchema-instance" z:Id="1" z:Type="Microsoft.Xrm.Sdk.Entity" z:Assembly="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" xmlns:z="http://schemas.microsoft.com/2003/10/Serialization/" xmlns="http://schemas.microsoft.com/xrm/2011/Contracts">
+  <Attributes z:Id="2" xmlns:d2p1="http://schemas.datacontract.org/2004/07/System.Collections.Generic">
+    <KeyValuePairOfstringanyType>
+      <d2p1:key z:Id="3">name</d2p1:key>
+      <d2p1:value z:Id="4" z:Type="System.String" z:Assembly="0">Contacts Lookup View</d2p1:value>
+    </KeyValuePairOfstringanyType>
+    <KeyValuePairOfstringanyType>
+      <d2p1:key z:Id="5">fetchxml</d2p1:key>
+      <d2p1:value z:Id="6" z:Type="System.String" z:Assembly="0">&lt;fetch version="1.0" mapping="logical"&gt;&lt;entity name="contact"&gt;&lt;attribute name="fullname" /&gt;&lt;attribute name="parentcustomerid" /&gt;&lt;attribute name="address1_city" /&gt;&lt;attribute name="address1_telephone1" /&gt;&lt;attribute name="telephone1" /&gt;&lt;attribute name="emailaddress1" /&gt;&lt;attribute name="contactid" /&gt;&lt;attribute name="fax" /&gt;&lt;attribute name="address1_name" /&gt;&lt;attribute name="address1_fax" /&gt;&lt;filter type="and"&gt;&lt;condition attribute="statecode" operator="eq" value="0" /&gt;&lt;/filter&gt;&lt;order attribute="fullname" descending="false" /&gt;&lt;/entity&gt;&lt;/fetch&gt;</d2p1:value>
+    </KeyValuePairOfstringanyType>
+    <KeyValuePairOfstringanyType>
+      <d2p1:key z:Id="7">layoutxml</d2p1:key>
+      <d2p1:value z:Id="8" z:Type="System.String" z:Assembly="0">&lt;grid name="resultset" object="2" jump="fullname" select="1" preview="0" icon="1"&gt;&lt;row name="result" id="contactid"&gt;&lt;cell name="fullname" width="300" /&gt;&lt;cell name="emailaddress1" width="200" /&gt;&lt;cell name="telephone1" width="125" /&gt;&lt;cell name="parentcustomerid" width="150" /&gt;&lt;cell name="address1_city" width="100" /&gt;&lt;cell name="address1_telephone1" width="125" /&gt;&lt;cell name="fax" ishidden="1" width="100" /&gt;&lt;cell name="address1_name" ishidden="1" width="100" /&gt;&lt;cell name="address1_fax" ishidden="1" width="100" /&gt;&lt;/row&gt;&lt;/grid&gt;</d2p1:value>
+    </KeyValuePairOfstringanyType>
+    <KeyValuePairOfstringanyType>
+      <d2p1:key z:Id="9">querytype</d2p1:key>
+      <d2p1:value z:Id="10" z:Type="System.Int32" z:Assembly="0">64</d2p1:value>
+    </KeyValuePairOfstringanyType>
+    <KeyValuePairOfstringanyType>
+      <d2p1:key z:Id="11">returnedtypecode</d2p1:key>
+      <d2p1:value z:Id="12" z:Type="System.String" z:Assembly="0">contact</d2p1:value>
+    </KeyValuePairOfstringanyType>
+    <KeyValuePairOfstringanyType>
+      <d2p1:key z:Id="13">savedqueryid</d2p1:key>
+      <d2p1:value z:Id="14" z:Type="System.Guid" z:Assembly="0">a2d479c5-53e3-4c69-addd-802327e67a0d</d2p1:value>
+    </KeyValuePairOfstringanyType>
+  </Attributes>
+  <EntityState i:nil="true" />
+  <FormattedValues z:Id="15" xmlns:d2p1="http://schemas.datacontract.org/2004/07/System.Collections.Generic">
+    <KeyValuePairOfstringstring>
+      <d2p1:key z:Id="16">querytype</d2p1:key>
+      <d2p1:value z:Id="17">64</d2p1:value>
+    </KeyValuePairOfstringstring>
+    <KeyValuePairOfstringstring>
+      <d2p1:key z:Id="18">returnedtypecode</d2p1:key>
+      <d2p1:value z:Id="19">Contact</d2p1:value>
+    </KeyValuePairOfstringstring>
+  </FormattedValues>
+  <Id>a2d479c5-53e3-4c69-addd-802327e67a0d</Id>
+  <KeyAttributes xmlns:d2p1="http://schemas.microsoft.com/xrm/7.1/Contracts" z:Id="20" xmlns:d2p2="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
+  <LogicalName z:Id="21">savedquery</LogicalName>
+  <RelatedEntities z:Id="22" xmlns:d2p1="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
+  <RowVersion z:Id="23">18855050</RowVersion>
+</Entity>

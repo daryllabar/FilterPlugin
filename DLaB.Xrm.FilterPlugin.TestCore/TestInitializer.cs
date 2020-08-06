@@ -30,6 +30,10 @@ namespace DLaB.Xrm.FilterPlugin.Test
             {
                 TestSettings.EarlyBound.ConfigureDerivedAssembly<CdsContext>();
             }
+            if (!TestSettings.SourceControlProvider.IsConfigured)
+            {
+                TestSettings.SourceControlProvider.ConfigureNone();
+            }
             if (!TestSettings.TestFrameworkProvider.IsConfigured)
             {
                 TestSettings.TestFrameworkProvider.Configure(new MsTestProvider());
